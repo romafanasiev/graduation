@@ -1,6 +1,6 @@
 import React from "react";
 
-const ForgotPassPage: React.FC = function () {
+const ForgotPassPage: React.FC = function ForgotPassPage() {
   return <h2>Forgot password?</h2>;
 };
 
