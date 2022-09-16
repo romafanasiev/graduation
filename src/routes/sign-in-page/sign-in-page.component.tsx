@@ -1,38 +1,30 @@
 import React from "react";
 
-import { InputLabel } from "@mui/material";
+import { Box, InputLabel, Link } from "@mui/material";
 import { Formik, Form } from "formik";
 import TextFormField from "../../components/text-form-fiels/text-form-field.component";
 import PassFormField from "../../components/pass-form-field/pass-form-field.component";
 import SubmitButton from "../../components/button-form/button-form.component";
 import Modal from "../../components/modal/modal.component";
 import ModalHeader from "../../components/modal-header/modal-header";
+import LinkSignUp from "../../components/link-to-sign-up/link-to-sign-up.component";
 import LogInContainer from "../../components/log-in-container/log-in-container.component";
 import getInitialValues from "../../utils/initial-values/initial-values.utils";
 import getValidation from "../../utils/validation/validation";
 
 import "../../utils/styles/sign-form.scss";
 
-const SignUpPage: React.FC = function LogInPage() {
-  const INITIAL_FORM_STATE = getInitialValues(
-    "email",
-    "newpassword",
-    "confirmPassword",
-    "firstName",
-    "lastName",
-  );
-  const FORM_VALIDATION = getValidation(
-    "email",
-    "newpassword",
-    "confirmPassword",
-    "firstName",
-    "lastName",
-  );
+const SignInPage: React.FC = function LogInPage() {
+  const INITIAL_FORM_STATE = getInitialValues("email", "password");
+  const FORM_VALIDATION = getValidation("email", "password");
 
   return (
     <LogInContainer>
       <Modal>
-        <ModalHeader title="Sign Up" message="Create a new account" />
+        <ModalHeader
+          title="Log In to Dashboard Kit"
+          message="Enter your email and password"
+        />
         <Formik
           initialValues={{
             ...INITIAL_FORM_STATE,
@@ -51,56 +43,40 @@ const SignUpPage: React.FC = function LogInPage() {
               placeholder="Email address"
               id="email"
             />
-
-            <InputLabel htmlFor="firstName" sx={{ margin: "24px 0 6px" }}>
-              First name
-            </InputLabel>
-            <TextFormField
-              name="firstName"
-              placeholder="First name"
-              id="firstName"
-            />
-
-            <InputLabel htmlFor="lastName" sx={{ margin: "24px 0 6px" }}>
-              LAST name
-            </InputLabel>
-            <TextFormField
-              name="lastName"
-              placeholder="Last name"
-              id="lastName"
-            />
-
             <InputLabel
-              htmlFor="newpassword"
+              htmlFor="password"
               sx={{
                 margin: "24px 0 6px",
               }}
             >
               Password
             </InputLabel>
-            <PassFormField name="newpassword" />
-
-            <InputLabel
-              htmlFor="confirmPassword"
-              sx={{
-                margin: "24px 0 6px",
-              }}
-            >
-              confirm password
-            </InputLabel>
-            <PassFormField name="confirmPassword" />
-
+            <PassFormField name="password" />
             <SubmitButton
-              text="Register"
+              text="Log in"
               sx={{
                 margin: "24px 0 0",
               }}
             />
           </Form>
         </Formik>
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            gap: "10px",
+
+            margin: "32px 0 0 0",
+          }}
+        >
+          <LinkSignUp />
+          <Link href="/forgot_pass">Forgot password?</Link>
+          <Link href="/reset_pass">Reset password?</Link>
+        </Box>
       </Modal>
     </LogInContainer>
   );
 };
 
-export default SignUpPage;
+export default SignInPage;
