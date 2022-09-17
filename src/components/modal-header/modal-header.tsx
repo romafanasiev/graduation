@@ -6,7 +6,7 @@ import Logo from "../logo/logo.component";
 
 interface ModalHeaderType {
   title: string;
-  message: string;
+  message?: string;
 }
 
 const ModalHeader: React.FC<ModalHeaderType> = function ModalHeader({
@@ -47,6 +47,10 @@ const ModalHeader: React.FC<ModalHeaderType> = function ModalHeader({
       </Typography>
     </>
   );
+};
+
+ModalHeader.defaultProps = {
+  message: undefined,
 };
 
 export default ModalHeader;

@@ -4,7 +4,7 @@ import { Box } from "@mui/material";
 import Modalstyles from "./modal.styles";
 
 interface ModalType {
-  children: React.ReactNode[];
+  children: React.ReactNode[] | React.ReactNode;
 }
 
 const Modal: React.FC<ModalType> = function Modal({ children }) {

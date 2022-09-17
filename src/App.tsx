@@ -10,7 +10,7 @@ const App: React.FC = function App() {
   return (
     <div className="app">
       <Routes>
-        <Route path="sign_in" element={<SignInPage />} />
+        <Route path="/" element={<SignInPage />} />
         <Route path="sign_up" element={<SignUpPage />} />
         <Route path="forgot" element={<ForgotPassPage />} />
         <Route path="reset" element={<ResetPassPage />} />

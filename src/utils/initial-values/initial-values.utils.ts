@@ -1,14 +1,7 @@
-interface InitialValuesType {
-  email?: string;
-  password?: string;
-  newpassword?: string;
-  confirmPassword?: string;
-  firstName?: string;
-  lastName?: string;
-}
+import { UserDataType } from "../types/types";
 
 function getInitialValues(...args: string[]) {
-  const initialValues: InitialValuesType = {};
+  const initialValues: UserDataType = {};
 
   args.forEach((value) => {
     initialValues[value as keyof typeof initialValues] = "";

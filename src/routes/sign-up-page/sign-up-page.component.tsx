@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 import { InputLabel } from "@mui/material";
 import { Formik, Form } from "formik";
+import { AuthError, AuthErrorCodes } from "firebase/auth";
 import TextFormField from "../../components/text-form-fiels/text-form-field.component";
 import PassFormField from "../../components/pass-form-field/pass-form-field.component";
 import SubmitButton from "../../components/button-form/button-form.component";
@@ -11,7 +13,15 @@ import LogInContainer from "../../components/log-in-container/log-in-container.c
 import getInitialValues from "../../utils/initial-values/initial-values.utils";
 import getValidation from "../../utils/validation/validation";
 
+import { UserDataType, ResetFormType } from "../../utils/types/types";
+
+import {
+  createAuthUserWithEmailAndPassword,
+  createUserDocumentFromAuth,
+} from "../../utils/firebase/firebase.utils";
+
 import "../../utils/styles/sign-form.scss";
+import AlertMessage from "../../components/alert-message/alert-message.component";
 
 const SignUpPage: React.FC = function LogInPage() {
   const INITIAL_FORM_STATE = getInitialValues(
@@ -28,6 +38,36 @@ const SignUpPage: React.FC = function LogInPage() {
     "firstName",
     "lastName",
   );
+  const [errorMessage, setErrorMessage] = useState("");
+  const navigate = useNavigate();
+
+  async function handleSubmit(values: UserDataType, resetForm: ResetFormType) {
+    const { email, newpassword, firstName, lastName } = values;
+
+    try {
+      const response = await createAuthUserWithEmailAndPassword(
+        email,
+        newpassword,
+      );
+
+      if (response) {
+        await createUserDocumentFromAuth(response.user, {
+          displayName: `${firstName} ${lastName}`,
+        });
+
+        resetForm();
+        setTimeout(() => {
+          navigate("/");
+        }, 3000);
+      }
+    } catch (error) {
+      if ((error as AuthError).code === AuthErrorCodes.EMAIL_EXISTS) {
+        setErrorMessage("Cannot create user, email already in use");
+      } else {
+        setErrorMessage("User creation encountered an error");
+      }
+    }
+  }
 
   return (
     <LogInContainer>
@@ -38,9 +78,9 @@ const SignUpPage: React.FC = function LogInPage() {
             ...INITIAL_FORM_STATE,
           }}
           validationSchema={FORM_VALIDATION}
-          onSubmit={(values) => {
-            console.log(values);
-          }}
+          onSubmit={async (values, { resetForm }) =>
+            handleSubmit(values, resetForm)
+          }
         >
           <Form className="sign-form">
             <InputLabel htmlFor="email" sx={{ margin: "0 0 6px" }}>
@@ -98,6 +138,7 @@ const SignUpPage: React.FC = function LogInPage() {
             />
           </Form>
         </Formik>
+        {errorMessage && <AlertMessage text={errorMessage} />}
       </Modal>
     </LogInContainer>
   );

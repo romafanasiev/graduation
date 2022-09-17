@@ -12,6 +12,8 @@ import LogInContainer from "../../components/log-in-container/log-in-container.c
 import getInitialValues from "../../utils/initial-values/initial-values.utils";
 import getValidation from "../../utils/validation/validation";
 
+// import { createUserDocumentFromAuth } from "../../utils/firebase/firebase.utils";
+
 import "../../utils/styles/sign-form.scss";
 
 const SignInPage: React.FC = function LogInPage() {
@@ -30,6 +32,9 @@ const SignInPage: React.FC = function LogInPage() {
             ...INITIAL_FORM_STATE,
           }}
           validationSchema={FORM_VALIDATION}
+          // onSubmit={(values) => {
+          //   createUserDocumentFromAuth(values.email);
+          // }}
           onSubmit={(values) => {
             console.log(values);
           }}
@@ -71,8 +76,7 @@ const SignInPage: React.FC = function LogInPage() {
           }}
         >
           <LinkSignUp />
-          <Link href="/forgot_pass">Forgot password?</Link>
-          <Link href="/reset_pass">Reset password?</Link>
+          <Link href="/forgot">Forgot password?</Link>
         </Box>
       </Modal>
     </LogInContainer>
