@@ -15,7 +15,7 @@ const Modalstyles = {
   border: `1px solid ${globalStyles.vars.whiteGrayColor}`,
   borderRadius: "8px",
 
-  backgroundColor: `${globalStyles.vars.whiteColor}`,
+  backgroundColor: globalStyles.vars.whiteColor,
 };
 
 export default Modalstyles;

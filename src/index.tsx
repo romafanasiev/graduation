@@ -1,6 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
+import { Provider } from "react-redux";
 
 import { createTheme } from "@mui/material/styles";
 
@@ -10,10 +11,24 @@ import App from "./App";
 // import reportWebVitals from "./reportWebVitals";
 import Mulish from "./assets/fonts/Mulish.ttf";
 
+import store from "./store/store";
+
 import "./index.scss";
 import globalStyles from "./utils/styles/style-vars";
 
 const theme = createTheme({
+  palette: {
+    primary: {
+      main: "#fff",
+    },
+    icons: {
+      main: "#c5c7cd",
+    },
+    button: {
+      main: "#3751ff",
+    },
+  },
+
   typography: {
     fontFamily: "Mulish, sans-serif",
     h2: {
@@ -27,6 +42,12 @@ const theme = createTheme({
       letterSpacing: "0.4px",
       fontWeight: "700",
       fontSize: "19px",
+    },
+    h4: {
+      color: globalStyles.vars.fontColor,
+      letterSpacing: "0.2px",
+      fontWeight: "600",
+      fontSize: "14px",
     },
     body1: {
       fontSize: "14px",
@@ -59,7 +80,6 @@ const theme = createTheme({
       styleOverrides: {
         root: {
           height: "42px",
-
           fontSize: "14px",
           fontWeight: "400",
           letterSpacing: "0.3px",
@@ -121,6 +141,45 @@ const theme = createTheme({
         },
       },
     },
+    MuiAppBar: {
+      styleOverrides: {
+        root: {
+          display: "flex",
+          flexDirection: "row",
+          justifyContent: "space-between",
+          alignItems: "center",
+
+          padding: "30px 33px",
+
+          height: "44px",
+
+          backgroundColor: globalStyles.vars.secondaryBackgroundColor,
+
+          color: globalStyles.vars.fontColor,
+        },
+      },
+    },
+    MuiMenuItem: {
+      styleOverrides: {
+        root: {
+          color: globalStyles.vars.buttonColor,
+          fontWeight: 600,
+          "&:hover": {
+            transform: "scale(1.05)",
+          },
+        },
+      },
+    },
+    MuiDivider: {
+      styleOverrides: {
+        root: {
+          width: "1px",
+          height: "32px",
+
+          backgroundColor: globalStyles.vars.secondaryWhiteColor,
+        },
+      },
+    },
   },
 });
 
@@ -129,14 +188,43 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <React.StrictMode>
-    <BrowserRouter>
-      <ThemeProvider theme={theme}>
-        <CssBaseline />
-        <App />
-      </ThemeProvider>
-    </BrowserRouter>
+    <Provider store={store}>
+      <BrowserRouter>
+        <ThemeProvider theme={theme}>
+          <CssBaseline />
+          <App />
+        </ThemeProvider>
+      </BrowserRouter>
+    </Provider>
   </React.StrictMode>,
 );
+
+declare module "@mui/material/styles" {
+  interface Palette {
+    icons: Palette["primary"];
+  }
+  interface PaletteOptions {
+    icons: PaletteOptions["primary"];
+  }
+  interface Palette {
+    button: Palette["primary"];
+  }
+  interface PaletteOptions {
+    button: PaletteOptions["primary"];
+  }
+}
+
+declare module "@mui/material/Badge" {
+  interface BadgePropsColorOverrides {
+    button: true;
+  }
+}
+
+declare module "@mui/material/SvgIcon" {
+  interface SvgIconPropsColorOverrides {
+    icons: true;
+  }
+}
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))

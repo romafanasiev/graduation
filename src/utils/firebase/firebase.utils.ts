@@ -7,7 +7,12 @@ import {
   getAuth,
   createUserWithEmailAndPassword,
   User,
+  UserCredential,
   sendPasswordResetEmail,
+  signInWithEmailAndPassword,
+  signOut,
+  onAuthStateChanged,
+  NextOrObserver,
 } from "firebase/auth";
 import {
   getFirestore,
@@ -30,7 +35,10 @@ const firebaseConfig = {
 };
 
 export interface UserData {
-  createdAt: Date;
+  createdAt: {
+    seconds: number;
+    nanoseconds: number;
+  };
   displayName: string;
   email: string;
 }
@@ -54,8 +62,6 @@ export async function createUserDocumentFromAuth(
 
   const userDocRef = doc(db, "users", userAuth.uid);
 
-  console.log(userDocRef);
-
   const userSnapshot = await getDoc(userDocRef);
 
   if (!userSnapshot.exists()) {
@@ -73,6 +79,7 @@ export async function createUserDocumentFromAuth(
       console.log("error creating the user", error);
     }
   }
+  return userSnapshot as QueryDocumentSnapshot<UserData>;
 }
 
 export async function createAuthUserWithEmailAndPassword(
@@ -87,3 +94,29 @@ export async function resetUserPassword(email: string | undefined) {
   if (!email) return;
   return await sendPasswordResetEmail(auth, email);
 }
+
+export async function signInAuthUserWithEmailAndPassword(
+  email: string | undefined,
+  password: string | undefined,
+) {
+  if (!email || !password) return;
+  return await signInWithEmailAndPassword(auth, email, password);
+}
+
+export const signOutUser = async () => await signOut(auth);
+
+export const onAuthStateChangedListener = (callback: NextOrObserver<User>) =>
+  onAuthStateChanged(auth, callback);
+
+// FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+// String newPassword = "SOME-SECURE-PASSWORD";
+
+// user.updatePassword(newPassword)
+//     .addOnCompleteListener(new OnCompleteListener<Void>() {
+//         @Override
+//         public void onComplete(@NonNull Task<Void> task) {
+//             if (task.isSuccessful()) {
+//                 Log.d(TAG, "User password updated.");
+//             }
+//         }
+//     });

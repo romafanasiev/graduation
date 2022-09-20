@@ -41,12 +41,6 @@ const PassFormField: React.FC<PassFormFieldType> = function PassFormField({
     setFieldValue(name, value);
   };
 
-  // const handleChange =
-  //   (prop: keyof PassInitialValues) =>
-  //   (event: React.ChangeEvent<HTMLInputElement>) => {
-  //     setValues({ ...values, [prop]: event.target.value });
-  //   };
-
   const handleClickShowPassword = () => {
     setValues({
       ...values,
@@ -85,9 +79,6 @@ const PassFormField: React.FC<PassFormFieldType> = function PassFormField({
       <OutlinedInput
         {...configPassField}
         type={values.showPassword ? "text" : "password"}
-        // value={values.password}
-        // onChange={handleFormikChange}
-        // onChange={handleChange("password")}
         endAdornment={
           <InputAdornment position="end">
             <IconButton

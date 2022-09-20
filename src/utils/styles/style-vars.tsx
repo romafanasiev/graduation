@@ -13,6 +13,7 @@ const globalStyles = {
     placeholders: "#4b506d",
     subtitleColor: "#a4a6b3",
     shadows: "#3751ff3d",
+    icons: "#c5c7cd",
   },
 };
 

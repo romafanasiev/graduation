@@ -1,7 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
+import { AuthError, AuthErrorCodes } from "firebase/auth";
 import { Box, InputLabel, Link } from "@mui/material";
 import { Formik, Form } from "formik";
+import { useAppDispatch } from "../../store/store";
 import TextFormField from "../../components/text-form-fiels/text-form-field.component";
 import PassFormField from "../../components/pass-form-field/pass-form-field.component";
 import SubmitButton from "../../components/button-form/button-form.component";
@@ -12,13 +15,41 @@ import LogInContainer from "../../components/log-in-container/log-in-container.c
 import getInitialValues from "../../utils/initial-values/initial-values.utils";
 import getValidation from "../../utils/validation/validation";
 
-// import { createUserDocumentFromAuth } from "../../utils/firebase/firebase.utils";
+import { signIn } from "../../store/user/user.reducer";
 
 import "../../utils/styles/sign-form.scss";
+import { ResetFormType, UserDataType } from "../../utils/types/types";
+
+import AlertMessage from "../../components/alert-message/alert-message.component";
 
 const SignInPage: React.FC = function LogInPage() {
   const INITIAL_FORM_STATE = getInitialValues("email", "password");
   const FORM_VALIDATION = getValidation("email", "password");
+  const [errorMessage, setErrorMessage] = useState("");
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+
+  async function handleSubmit(values: UserDataType, resetForm: ResetFormType) {
+    const { email, password } = values;
+    try {
+      if (email !== undefined && password !== undefined) {
+        await dispatch(signIn({ email, password })).unwrap();
+        navigate("/admin");
+      }
+      resetForm();
+    } catch (error) {
+      switch ((error as AuthError).code) {
+        case AuthErrorCodes.INVALID_PASSWORD:
+          setErrorMessage("Incorrect password for email");
+          break;
+        case AuthErrorCodes.USER_DELETED:
+          setErrorMessage("Incorrect email");
+          break;
+        default:
+          setErrorMessage("Error occured");
+      }
+    }
+  }
 
   return (
     <LogInContainer>
@@ -27,17 +58,15 @@ const SignInPage: React.FC = function LogInPage() {
           title="Log In to Dashboard Kit"
           message="Enter your email and password"
         />
+        {errorMessage && <AlertMessage text={errorMessage} />}
         <Formik
           initialValues={{
             ...INITIAL_FORM_STATE,
           }}
           validationSchema={FORM_VALIDATION}
-          // onSubmit={(values) => {
-          //   createUserDocumentFromAuth(values.email);
-          // }}
-          onSubmit={(values) => {
-            console.log(values);
-          }}
+          onSubmit={async (values, { resetForm }) =>
+            handleSubmit(values, resetForm)
+          }
         >
           <Form className="sign-form">
             <InputLabel htmlFor="email" sx={{ margin: "0 0 6px" }}>

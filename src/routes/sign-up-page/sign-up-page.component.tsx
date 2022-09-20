@@ -38,6 +38,7 @@ const SignUpPage: React.FC = function LogInPage() {
     "firstName",
     "lastName",
   );
+
   const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
 
@@ -56,9 +57,7 @@ const SignUpPage: React.FC = function LogInPage() {
         });
 
         resetForm();
-        setTimeout(() => {
-          navigate("/");
-        }, 3000);
+        navigate("/");
       }
     } catch (error) {
       if ((error as AuthError).code === AuthErrorCodes.EMAIL_EXISTS) {
@@ -73,6 +72,7 @@ const SignUpPage: React.FC = function LogInPage() {
     <LogInContainer>
       <Modal>
         <ModalHeader title="Sign Up" message="Create a new account" />
+        {errorMessage && <AlertMessage text={errorMessage} />}
         <Formik
           initialValues={{
             ...INITIAL_FORM_STATE,
@@ -138,7 +138,6 @@ const SignUpPage: React.FC = function LogInPage() {
             />
           </Form>
         </Formik>
-        {errorMessage && <AlertMessage text={errorMessage} />}
       </Modal>
     </LogInContainer>
   );
