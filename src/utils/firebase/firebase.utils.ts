@@ -2,6 +2,7 @@
 /* eslint-disable @typescript-eslint/return-await */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 // Import the functions you need from the SDKs you need
+import userEvent from "@testing-library/user-event";
 import { initializeApp } from "firebase/app";
 import {
   getAuth,
@@ -13,6 +14,7 @@ import {
   signOut,
   onAuthStateChanged,
   NextOrObserver,
+  updatePassword,
 } from "firebase/auth";
 import {
   getFirestore,
@@ -108,15 +110,30 @@ export const signOutUser = async () => await signOut(auth);
 export const onAuthStateChangedListener = (callback: NextOrObserver<User>) =>
   onAuthStateChanged(auth, callback);
 
-// FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-// String newPassword = "SOME-SECURE-PASSWORD";
+export const changeUserPassword = async (newpassword: string | undefined) => {
+  const user = auth.currentUser;
+  // console.log(user);
+  if (user && newpassword !== undefined) {
+    updatePassword(user, newpassword)
+      .then(() => {
+        return "success";
+      })
+      .catch(() => {
+        return new Error("Please login");
+      });
+  }
+  if (user === null) return new Error("Please login");
+};
 
-// user.updatePassword(newPassword)
-//     .addOnCompleteListener(new OnCompleteListener<Void>() {
-//         @Override
-//         public void onComplete(@NonNull Task<Void> task) {
-//             if (task.isSuccessful()) {
-//                 Log.d(TAG, "User password updated.");
-//             }
-//         }
-//     });
+// updateProfile(auth.currentUser, {
+//   displayName: "Jane Q. User",
+//   photoURL: "https://example.com/jane-q-user/profile.jpg",
+// })
+//   .then(() => {
+//     // Profile updated!
+//     // ...
+//   })
+//   .catch((error) => {
+//     // An error occurred
+//     // ...
+//   });

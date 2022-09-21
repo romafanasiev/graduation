@@ -14,6 +14,8 @@ const globalStyles = {
     subtitleColor: "#a4a6b3",
     shadows: "#3751ff3d",
     icons: "#c5c7cd",
+    lightBlue: "#dde2ff",
+    lightBlueOpacity: "#dde2ff14",
   },
 };
 

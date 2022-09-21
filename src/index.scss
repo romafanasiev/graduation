@@ -10,6 +10,17 @@ body {
   color: $fontColor;
 }
 
+.link {
+  text-decoration: none;
+  color: $buttonColor;
+}
+
+.menu__link {
+  width: 100%;
+  text-decoration: none;
+  color: $greyColor;
+}
+
 * {
   box-sizing: border-box;
   outline: none;

@@ -1,13 +1,12 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { Typography, MenuItem, Link, Stack, Divider } from "@mui/material";
+import { Link, useNavigate } from "react-router-dom";
+import { Typography, MenuItem, Stack, Divider } from "@mui/material";
 import Avatar from "@mui/material/Avatar";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import Button from "@mui/material/Button";
 import Menu from "@mui/material/Menu";
 import { RootState, useAppDispatch } from "../../store/store";
-
 import globalStyles from "../../utils/styles/style-vars";
 import { signOut } from "../../store/user/user.reducer";
 
@@ -90,7 +89,9 @@ const UserInfo = function UserInfo() {
       >
         <MenuItem onClick={handleClose}>Add photo</MenuItem>
         <MenuItem onClick={handleClose}>
-          <Link href="/reset">Change password</Link>
+          <Link to="/reset" className="link">
+            Change password
+          </Link>
         </MenuItem>
         <MenuItem onClick={handleSignOut}>Logout</MenuItem>
       </Menu>

@@ -14,12 +14,14 @@ interface UserState {
   currentUser: UserData | null;
   isLoading: boolean | string;
   error: null | Error;
+  isAuthenticated: boolean;
 }
 
 const USER_INITIAL_STATE = {
   currentUser: null,
   isLoading: false,
   error: null,
+  isAuthenticated: false,
 } as UserState;
 
 interface SignInType {
@@ -72,6 +74,7 @@ const userSlice = createSlice({
         state.currentUser = action.payload;
         state.isLoading = false;
         state.error = null;
+        state.isAuthenticated = true;
       })
 
       .addCase(signIn.rejected, (state, action) => {
@@ -90,6 +93,7 @@ const userSlice = createSlice({
         state.currentUser = null;
         state.isLoading = true;
         state.error = null;
+        state.isAuthenticated = false;
       })
 
       .addCase(signOut.rejected, (state, action) => {
