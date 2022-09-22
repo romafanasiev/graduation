@@ -1,4 +1,5 @@
 import React from "react";
+// import React, { useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
 
 import SignInPage from "./routes/sign-in-page/sign-in-page.component";
@@ -9,7 +10,14 @@ import TicketsPage from "./routes/tickets-page/tickets-page.component";
 import Navigation from "./components/navigation/navigation.component";
 import PrivateRoutes from "./utils/private-routes/private-routes.utils";
 
+// import MESSAGES_DATA from "./utils/users.data";
+// import { addCollectionAndDocuments } from "./utils/firebase/firebase.utils";
+
 const App: React.FC = function App() {
+  // useEffect(() => {
+  //   addCollectionAndDocuments("messages", MESSAGES_DATA);
+  // }, []);
+
   return (
     <div className="app">
       <Routes>

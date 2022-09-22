@@ -78,10 +78,9 @@ const userSlice = createSlice({
       })
 
       .addCase(signIn.rejected, (state, action) => {
-        const { error }: { error: any } = action;
         state.currentUser = null;
         state.isLoading = "failed";
-        state.error = error;
+        state.error = action.error as Error;
       })
 
       .addCase(signOut.pending, (state) => {
@@ -97,10 +96,9 @@ const userSlice = createSlice({
       })
 
       .addCase(signOut.rejected, (state, action) => {
-        const { error }: { error: any } = action;
         state.currentUser = null;
         state.isLoading = "failed";
-        state.error = error;
+        state.error = action.error as Error;
       });
   },
 });

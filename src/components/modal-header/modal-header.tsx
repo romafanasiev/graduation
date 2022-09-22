@@ -15,7 +15,7 @@ const ModalHeader: React.FC<ModalHeaderType> = function ModalHeader({
 }) {
   return (
     <>
-      <Logo />
+      <Logo sx={{ fontSize: "48px" }} />
 
       <Typography
         variant="h3"

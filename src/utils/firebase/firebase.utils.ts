@@ -2,13 +2,11 @@
 /* eslint-disable @typescript-eslint/return-await */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 // Import the functions you need from the SDKs you need
-import userEvent from "@testing-library/user-event";
 import { initializeApp } from "firebase/app";
 import {
   getAuth,
   createUserWithEmailAndPassword,
   User,
-  UserCredential,
   sendPasswordResetEmail,
   signInWithEmailAndPassword,
   signOut,
@@ -22,7 +20,13 @@ import {
   getDoc,
   setDoc,
   QueryDocumentSnapshot,
+  collection,
+  writeBatch,
+  query,
+  getDocs,
+  getDocsFromCache,
 } from "firebase/firestore";
+import { Category } from "../../store/messages/messages.types";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -55,6 +59,36 @@ export const firebaseApp = initializeApp(firebaseConfig);
 export const auth = getAuth();
 
 export const db = getFirestore();
+
+// creating Database
+export const addCollectionAndDocuments = async (
+  collectionKey: string,
+  objectsToAdd: any[],
+) => {
+  const collectionRef = collection(db, collectionKey);
+  const batch = writeBatch(db);
+
+  objectsToAdd.forEach((object) => {
+    const docRef = doc(collectionRef, object.title.toLowerCase());
+    batch.set(docRef, object);
+  });
+
+  await batch.commit();
+};
+
+export const getCategoriesAndDocuments = async (
+  category: string,
+): Promise<Category[]> => {
+  const collectionRef = collection(db, category);
+  const q = query(collectionRef);
+
+  const querySnapshot = await getDocs(q);
+  return querySnapshot.docs.map(
+    (docSnapshot) => docSnapshot.data() as Category,
+  );
+};
+
+// creating User
 
 export async function createUserDocumentFromAuth(
   userAuth: User,

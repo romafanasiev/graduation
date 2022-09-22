@@ -1,7 +1,13 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 
+import createSagaMiddleware from "redux-saga";
 import userReducer from "./user/user.reducer";
+import messagesReducer from "./messages/messages.reducer";
+
+import rootSaga from "./root-saga";
+
+// import onFetchCategories from "./messages/messages.saga";
 
 export type RootState = ReturnType<typeof store.getState>;
 
@@ -11,25 +17,18 @@ export const useAppDispatch: () => AppDispatch = useDispatch;
 
 export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
 
+const sagaMiddleware = createSagaMiddleware();
+
 const store = configureStore({
   reducer: {
     user: userReducer,
+    messages: messagesReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
-      serializableCheck: {
-        // Ignore these action types
-        ignoredActions: ["user/SIGN_IN"],
-        // Ignore these field paths in all actions
-        ignoredActionPaths: [
-          "meta.arg",
-          "payload.timestamp",
-          "payload.createdAt",
-        ],
-        // Ignore these paths in the state
-        ignoredPaths: ["user.currentUser"],
-      },
-    }),
+      serializableCheck: false,
+    }).concat(sagaMiddleware),
 });
 
+sagaMiddleware.run(rootSaga);
 export default store;

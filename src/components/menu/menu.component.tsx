@@ -55,9 +55,11 @@ export default function MenuDrawer() {
           gap: "12px",
 
           margin: "27px 0 59px",
+
+          height: "32px",
         }}
       >
-        <Logo />
+        <Logo sx={{ fontSize: "32px" }} />
         <Typography variant="h3">Dashboard Kit</Typography>
       </Box>
       <MenuListItem items={navigationLinks} />
