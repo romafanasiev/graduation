@@ -16,6 +16,9 @@ const globalStyles = {
     icons: "#c5c7cd",
     lightBlue: "#dde2ff",
     lightBlueOpacity: "#dde2ff14",
+    red: "#f12b2c",
+    green: "#29cc97",
+    yellow: "#fec400",
   },
 };
 

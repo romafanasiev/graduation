@@ -102,7 +102,7 @@ const SignUpPage: React.FC = function LogInPage() {
             />
 
             <InputLabel htmlFor="lastName" sx={{ margin: "24px 0 6px" }}>
-              LAST name
+              Last name
             </InputLabel>
             <TextFormField
               name="lastName"

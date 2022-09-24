@@ -27,6 +27,9 @@ const theme = createTheme({
     button: {
       main: "#3751ff",
     },
+    background: {
+      default: "#f7f8fc",
+    },
   },
 
   typography: {
@@ -177,6 +180,27 @@ const theme = createTheme({
           height: "32px",
 
           backgroundColor: globalStyles.vars.secondaryWhiteColor,
+        },
+      },
+    },
+    MuiTablePagination: {
+      styleOverrides: {
+        selectLabel: {
+          color: globalStyles.vars.greyColor,
+          letterSpacing: "0.2px",
+        },
+        select: {
+          color: globalStyles.vars.fontColor,
+        },
+        displayedRows: {
+          color: globalStyles.vars.greyColor,
+          letterSpacing: "0.2px",
+        },
+        selectIcon: {
+          fill: globalStyles.vars.greyColor,
+        },
+        actions: {
+          margin: "0 0 0 33px",
         },
       },
     },

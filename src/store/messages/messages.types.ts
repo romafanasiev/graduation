@@ -5,11 +5,28 @@ export enum MESSAGES_ACTION_TYPES {
   FETCH_MESSAGES_FAILED = "messages/FETCH_MESSAGES_FAILED",
 }
 
+export enum MESSAGES_DATA_TYPES {
+  id = "id",
+  name = "name",
+  email = "email",
+  avatar = "avatar",
+  priority = "priority",
+  message = "message",
+  address = "address",
+  date = "date",
+  registration = "registration",
+}
+
 export type CategoryItem = {
-  avatar: string;
-  email: string;
   id: number;
   name: string;
+  email: string;
+  avatar: string;
+  priority: string;
+  message: string;
+  address: string;
+  date: string;
+  registration: string;
 };
 
 export type Category = {

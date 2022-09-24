@@ -8,6 +8,8 @@ const ContainerStyles = {
   margin: 0,
   padding: "20px",
 
+  minHeight: "100vh",
+
   backgroundColor: `${globalStyles.vars.backgroundColor}`,
   color: `${globalStyles.vars.greyColor}`,
 };
