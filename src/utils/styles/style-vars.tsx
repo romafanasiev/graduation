@@ -19,6 +19,7 @@ const globalStyles = {
     red: "#f12b2c",
     green: "#29cc97",
     yellow: "#fec400",
+    borderColor: "#e0e0e0",
   },
 };
 

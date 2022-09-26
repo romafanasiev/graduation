@@ -9,6 +9,7 @@ import ResetPassPage from "./routes/reset-pass-page/reset-pass-page.component";
 import TicketsPage from "./routes/tickets-page/tickets-page.component";
 import Navigation from "./components/navigation/navigation.component";
 import PrivateRoutes from "./utils/private-routes/private-routes.utils";
+import ContactsPage from "./routes/contacts-page/contacts-page.component";
 
 // import MESSAGES_DATA from "./utils/users.data";
 // import { addCollectionAndDocuments } from "./utils/firebase/firebase.utils";
@@ -28,7 +29,7 @@ const App: React.FC = function App() {
             <Route path="overview" element={<h1>Overwiev page</h1>} />
             <Route path="tickets" element={<TicketsPage />} />
             <Route path="ideas" element={<h1>Ideas page</h1>} />
-            <Route path="contacts" element={<h1>Ideas page</h1>} />
+            <Route path="contacts" element={<ContactsPage />} />
             <Route path="agents" element={<h1>Agents page</h1>} />
             <Route path="articles" element={<h1>Articles page</h1>} />
             <Route path="settings" element={<h1>Settings page</h1>} />

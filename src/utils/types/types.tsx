@@ -26,3 +26,8 @@ export interface ResetFormType {
   ): void;
   (): void;
 }
+
+export interface FilterDataType {
+  title: string;
+  data: string;
+}

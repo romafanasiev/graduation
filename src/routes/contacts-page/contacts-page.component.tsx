@@ -10,16 +10,16 @@ import {
 } from "../../store/messages/messages.types";
 import { RootState } from "../../store/store";
 
-const TicketsPage: React.FC = function TicketsPage() {
+const ContactsPage: React.FC = function ContactsPage() {
   const [messages, setMessages] = useState<CategoryItem[]>([]);
   const data = useSelector((state: RootState) => state.messages.messages);
 
-  const rows = ["Message details", "Customer name", "Date", "Priority", ""];
+  const rows = ["Customer name", "Email", "Address", "Created At", ""];
   const selected = [
-    MESSAGES_DATA_TYPES.message,
     MESSAGES_DATA_TYPES.name,
+    MESSAGES_DATA_TYPES.email,
+    MESSAGES_DATA_TYPES.address,
     MESSAGES_DATA_TYPES.date,
-    MESSAGES_DATA_TYPES.priority,
   ];
 
   useEffect(() => {
@@ -37,10 +37,10 @@ const TicketsPage: React.FC = function TicketsPage() {
         selected={selected}
         perPageVariants={[8, 4, 2]}
         filterItems={[
-          { title: "Filter by message", data: "message" },
           { title: "Filter by name", data: "name" },
           { title: "Filter by date", data: "date" },
-          { title: "Filter by priority", data: "priority" },
+          { title: "Filter by email", data: "email" },
+          { title: "Filter by address", data: "address" },
           { title: "Clear filter", data: "none" },
         ]}
       />
@@ -48,4 +48,4 @@ const TicketsPage: React.FC = function TicketsPage() {
   );
 };
 
-export default TicketsPage;
+export default ContactsPage;

@@ -1,16 +1,12 @@
 import React, { useState } from "react";
 import {
   Box,
-  Button,
-  Menu,
-  MenuItem,
   Paper,
   Table,
   TableBody,
   TableCell,
   TableContainer,
   TableHead,
-  TablePagination,
   TableRow,
 } from "@mui/material";
 import { CategoryItem } from "../../store/messages/messages.types";
@@ -21,25 +17,33 @@ import PopUp from "../popup/popup.component";
 import SortIcon from "../sort-icon/sort-icon.component";
 import FilterIcon from "../filter-icon/filter-icon.component";
 
-import messageTableStyles from "./messages-table.styles";
+import { FilterDataType } from "../../utils/types/types";
+
+import MessagesPagination from "../messages-pagination/messages-pagination.component";
+import SortComponent from "../sort/sort.component";
+import MessageSkeleton from "../message-skeleton/message-skeleton.component";
 
 type MessagesTableType = {
   rows: string[];
   selected: string[];
   data: CategoryItem[];
+  perPageVariants: number[];
+  filterItems: FilterDataType[];
 };
 
 const MessagesTable: React.FC<MessagesTableType> = function MessagesTable({
   rows,
   data,
   selected,
+  perPageVariants,
+  filterItems,
 }) {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [choosenEl, setChoosenEl] = useState<string>("");
   const [filterBy, setFilterBy] = useState<string>("");
   const [sortOrder, setSortOrder] = useState<string>("asc");
   const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(8);
+  const [rowsPerPage, setRowsPerPage] = React.useState(perPageVariants[0]);
 
   const handleChangePage = (_event: unknown, newPage: number) => {
     setPage(newPage);
@@ -108,82 +112,27 @@ const MessagesTable: React.FC<MessagesTableType> = function MessagesTable({
               gap: "34px",
             }}
           >
-            <Button
-              aria-label="more"
-              aria-haspopup="true"
-              id="sort-button"
-              onClick={handleClick}
-              startIcon={<SortIcon />}
-              sx={messageTableStyles.sorting}
-              disableRipple
-            >
-              Sort
-            </Button>
-            <Menu
-              id="sort-menu"
+            <SortComponent
+              id="sort"
+              handleClick={handleClick}
+              logo={<SortIcon />}
               anchorEl={anchorEl}
-              open={choosenEl.includes("sort")}
-              onClose={handleClose}
-              disableScrollLock
-              anchorOrigin={{
-                vertical: "center",
-                horizontal: "left",
-              }}
-              transformOrigin={{
-                vertical: "center",
-                horizontal: "right",
-              }}
-            >
-              <MenuItem onClick={handleClose} data-sort="asc">
-                Sort in asc order
-              </MenuItem>
-              <MenuItem onClick={handleClose} data-sort="desc">
-                Sort in desc order
-              </MenuItem>
-            </Menu>
-
-            <Button
-              aria-label="more"
-              aria-haspopup="true"
-              id="filter-button"
-              onClick={handleClick}
-              startIcon={<FilterIcon />}
-              sx={messageTableStyles.sorting}
-              disableRipple
-            >
-              Filter
-            </Button>
-            <Menu
-              id="filter-menu"
+              choosenEl={choosenEl}
+              handleClose={handleClose}
+              menuItems={[
+                { title: "Sort in asc order", data: "asc" },
+                { title: "Sort in desc order", data: "desc" },
+              ]}
+            />
+            <SortComponent
+              id="filter"
+              handleClick={handleClick}
+              logo={<FilterIcon />}
               anchorEl={anchorEl}
-              open={choosenEl.includes("filter")}
-              onClose={handleClose}
-              disableScrollLock
-              anchorOrigin={{
-                vertical: "center",
-                horizontal: "left",
-              }}
-              transformOrigin={{
-                vertical: "center",
-                horizontal: "right",
-              }}
-            >
-              <MenuItem onClick={handleClose} data-filter="message">
-                Filter by message
-              </MenuItem>
-              <MenuItem onClick={handleClose} data-filter="name">
-                Filter by name
-              </MenuItem>
-              <MenuItem onClick={handleClose} data-filter="date">
-                Filter by date
-              </MenuItem>
-              <MenuItem onClick={handleClose} data-filter="priority">
-                Filter by priority
-              </MenuItem>
-              <MenuItem onClick={handleClose} data-filter="none">
-                Clear filter
-              </MenuItem>
-            </Menu>
+              choosenEl={choosenEl}
+              handleClose={handleClose}
+              menuItems={filterItems}
+            />
           </Box>
         </Box>
         <PopUp />
@@ -209,27 +158,26 @@ const MessagesTable: React.FC<MessagesTableType> = function MessagesTable({
           </TableRow>
         </TableHead>
         <TableBody>
-          {visibleItems
-            .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-            .map((message) => {
-              return (
-                <Card data={message} selected={selected} key={message.id} />
-              );
-            })}
+          {data.length > 0 ? (
+            visibleItems
+              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+              .map((message) => {
+                return (
+                  <Card data={message} selected={selected} key={message.id} />
+                );
+              })
+          ) : (
+            <MessageSkeleton rows={rows} />
+          )}
         </TableBody>
       </Table>
-      <TablePagination
-        SelectProps={{
-          MenuProps: { disableScrollLock: true },
-          sx: { margin: "0 50px 0 0" },
-        }}
-        rowsPerPageOptions={[2, 4, 8]}
-        component="div"
-        count={visibleItems.length}
-        rowsPerPage={rowsPerPage}
+      <MessagesPagination
+        rowsPerPageVariants={perPageVariants}
+        data={visibleItems}
+        perPage={rowsPerPage}
         page={page}
-        onPageChange={handleChangePage}
-        onRowsPerPageChange={handleChangeRowsPerPage}
+        handleChangePage={handleChangePage}
+        handleChangeRowsPerPage={handleChangeRowsPerPage}
       />
     </TableContainer>
   );
