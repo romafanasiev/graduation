@@ -6,13 +6,14 @@ import { initializeApp } from "firebase/app";
 import {
   getAuth,
   createUserWithEmailAndPassword,
-  User,
+  UserInfo,
   sendPasswordResetEmail,
   signInWithEmailAndPassword,
   signOut,
   onAuthStateChanged,
   NextOrObserver,
   updatePassword,
+  updateProfile,
 } from "firebase/auth";
 import {
   getFirestore,
@@ -26,6 +27,7 @@ import {
   getDocs,
   getDocsFromCache,
 } from "firebase/firestore";
+import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
 import { Category } from "../../store/messages/messages.types";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -47,6 +49,8 @@ export interface UserData {
   };
   displayName: string;
   email: string;
+  uid: string;
+  photoURL: string | null;
 }
 
 export type AdditionalInformation = {
@@ -59,6 +63,8 @@ export const firebaseApp = initializeApp(firebaseConfig);
 export const auth = getAuth();
 
 export const db = getFirestore();
+
+export const storage = getStorage();
 
 // creating Database
 export const addCollectionAndDocuments = async (
@@ -91,7 +97,7 @@ export const getCategoriesAndDocuments = async (
 // creating User
 
 export async function createUserDocumentFromAuth(
-  userAuth: User,
+  userAuth: UserInfo,
   additionalInformation = {} as AdditionalInformation,
 ): Promise<void | QueryDocumentSnapshot<UserData>> {
   if (!userAuth) return;
@@ -99,7 +105,6 @@ export async function createUserDocumentFromAuth(
   const userDocRef = doc(db, "users", userAuth.uid);
 
   const userSnapshot = await getDoc(userDocRef);
-
   if (!userSnapshot.exists()) {
     const { displayName, email } = userAuth;
     const createdAt = new Date();
@@ -141,12 +146,12 @@ export async function signInAuthUserWithEmailAndPassword(
 
 export const signOutUser = async () => await signOut(auth);
 
-export const onAuthStateChangedListener = (callback: NextOrObserver<User>) =>
-  onAuthStateChanged(auth, callback);
+export const onAuthStateChangedListener = (
+  callback: NextOrObserver<UserInfo>,
+) => onAuthStateChanged(auth, callback);
 
 export const changeUserPassword = async (newpassword: string | undefined) => {
   const user = auth.currentUser;
-  // console.log(user);
   if (user && newpassword !== undefined) {
     updatePassword(user, newpassword)
       .then(() => {
@@ -159,15 +164,27 @@ export const changeUserPassword = async (newpassword: string | undefined) => {
   if (user === null) return new Error("Please login");
 };
 
-// updateProfile(auth.currentUser, {
-//   displayName: "Jane Q. User",
-//   photoURL: "https://example.com/jane-q-user/profile.jpg",
-// })
-//   .then(() => {
-//     // Profile updated!
-//     // ...
-//   })
-//   .catch((error) => {
-//     // An error occurred
-//     // ...
-//   });
+export const uploadUserPhoto = async (file: File) => {
+  const user = auth.currentUser;
+  const { uid } = user as UserInfo;
+  const path = `avatars/${uid}/avatar`;
+  const storageRef = ref(storage, path);
+  let imageUrl;
+  await uploadBytes(storageRef, file).then(async () => {
+    imageUrl = await getDownloadURL(storageRef);
+  });
+
+  if (user !== null) {
+    updateProfile(user, {
+      photoURL: `${imageUrl}`,
+    })
+      .then(() => {
+        console.log("photo updated");
+      })
+      .catch((error) => {
+        console.log("photo update error");
+      });
+  }
+
+  return imageUrl;
+};

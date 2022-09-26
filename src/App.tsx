@@ -10,6 +10,7 @@ import TicketsPage from "./routes/tickets-page/tickets-page.component";
 import Navigation from "./components/navigation/navigation.component";
 import PrivateRoutes from "./utils/private-routes/private-routes.utils";
 import ContactsPage from "./routes/contacts-page/contacts-page.component";
+import AddPhotoPage from "./routes/add-photo/add-photo-page";
 
 // import MESSAGES_DATA from "./utils/users.data";
 // import { addCollectionAndDocuments } from "./utils/firebase/firebase.utils";
@@ -36,6 +37,7 @@ const App: React.FC = function App() {
             <Route path="subscription" element={<h1>Subscription page</h1>} />
           </Route>
           <Route path="reset" element={<ResetPassPage />} />
+          <Route path="photo" element={<AddPhotoPage />} />
         </Route>
         <Route path="sign_in" element={<SignInPage />} />
         <Route path="sign_up" element={<SignUpPage />} />

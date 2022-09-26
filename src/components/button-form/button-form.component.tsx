@@ -6,6 +6,7 @@ import { useFormikContext } from "formik";
 type SubmitButtonType = {
   text: string;
   sx?: SxProps;
+  children?: any;
 };
 
 const SubmitButton: React.FC<SubmitButtonType> = function SubmitButton({
@@ -33,6 +34,7 @@ const SubmitButton: React.FC<SubmitButtonType> = function SubmitButton({
 
 SubmitButton.defaultProps = {
   sx: null,
+  children: null,
 };
 
 export default SubmitButton;

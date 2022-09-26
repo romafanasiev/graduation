@@ -5,7 +5,7 @@ import { AuthError, AuthErrorCodes } from "firebase/auth";
 import { InputLabel, Typography } from "@mui/material";
 import { Formik, Form } from "formik";
 
-import TextFormField from "../../components/text-form-fiels/text-form-field.component";
+import TextFormField from "../../components/text-form-field/text-form-field.component";
 import SubmitButton from "../../components/button-form/button-form.component";
 import Modal from "../../components/modal/modal.component";
 import ModalHeader from "../../components/modal-header/modal-header";

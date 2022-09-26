@@ -55,13 +55,21 @@ const SortComponent: React.FC<Props> = function SortComponent({
         {menuItems.map((item) => {
           if (id === "sort") {
             return (
-              <MenuItem onClick={handleClose} data-sort={item.data}>
+              <MenuItem
+                onClick={handleClose}
+                data-sort={item.data}
+                key={item.title}
+              >
                 {item.title}
               </MenuItem>
             );
           }
           return (
-            <MenuItem onClick={handleClose} data-filter={item.data}>
+            <MenuItem
+              onClick={handleClose}
+              data-filter={item.data}
+              key={item.title}
+            >
               {item.title}
             </MenuItem>
           );

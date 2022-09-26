@@ -9,14 +9,15 @@ import Menu from "@mui/material/Menu";
 import { RootState, useAppDispatch } from "../../store/store";
 import globalStyles from "../../utils/styles/style-vars";
 import { signOut } from "../../store/user/user.reducer";
+import userInfoStyles from "./user-info.styles";
 
 const UserInfo = function UserInfo() {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const user = useSelector((state: RootState) => state.user.currentUser);
+  const avatar = useSelector((state: RootState) => state.user.avatar);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
   };
@@ -61,22 +62,13 @@ const UserInfo = function UserInfo() {
         aria-expanded={open ? "true" : undefined}
         onClick={handleClick}
       >
-        <Avatar
-          sx={{
-            height: "44px",
-            width: "44px",
-            backgroundColor: globalStyles.vars.whiteColor,
-          }}
-        >
-          <AccountCircleIcon
-            color="icons"
-            sx={{
-              height: "42px",
-              width: "42px",
-              backgroundColor: globalStyles.vars.whiteColor,
-            }}
-          />
-        </Avatar>
+        {avatar ? (
+          <Avatar src={avatar} sx={userInfoStyles.avatar} />
+        ) : (
+          <Avatar sx={userInfoStyles.avatar}>
+            <AccountCircleIcon color="icons" sx={userInfoStyles.avatarIcon} />
+          </Avatar>
+        )}
       </Button>
       <Menu
         disableScrollLock
@@ -88,7 +80,11 @@ const UserInfo = function UserInfo() {
           "aria-labelledby": "basic-button",
         }}
       >
-        <MenuItem onClick={handleClose}>Add photo</MenuItem>
+        <MenuItem onClick={handleClose}>
+          <Link to="/photo" className="link">
+            Add photo
+          </Link>
+        </MenuItem>
         <MenuItem onClick={handleClose}>
           <Link to="/reset" className="link">
             Change password

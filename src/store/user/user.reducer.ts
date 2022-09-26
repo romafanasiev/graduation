@@ -15,6 +15,7 @@ interface UserState {
   isLoading: boolean | string;
   error: null | Error;
   isAuthenticated: boolean;
+  avatar: null | string;
 }
 
 const USER_INITIAL_STATE = {
@@ -22,6 +23,7 @@ const USER_INITIAL_STATE = {
   isLoading: false,
   error: null,
   isAuthenticated: false,
+  avatar: null,
 } as UserState;
 
 interface SignInType {
@@ -39,12 +41,14 @@ export const signIn = createAsyncThunk(
     );
 
     const user = userCredential?.user;
-
     if (user) {
       const userSnapshot = (await createUserDocumentFromAuth(
         user,
       )) as QueryDocumentSnapshot;
-      return userSnapshot.data() as UserData;
+      return {
+        user: userSnapshot.data() as UserData,
+        avatar: user.photoURL,
+      };
     }
 
     return null;
@@ -62,7 +66,11 @@ export const signOut = createAsyncThunk(
 const userSlice = createSlice({
   name: "user",
   initialState: USER_INITIAL_STATE,
-  reducers: {},
+  reducers: {
+    setAvatar: (state, action) => {
+      state.avatar = action.payload;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(signIn.pending, (state) => {
@@ -71,7 +79,10 @@ const userSlice = createSlice({
       })
 
       .addCase(signIn.fulfilled, (state, action) => {
-        state.currentUser = action.payload;
+        if (action.payload) {
+          state.avatar = action.payload.avatar;
+          state.currentUser = action.payload.user;
+        }
         state.isLoading = false;
         state.error = null;
         state.isAuthenticated = true;
@@ -81,6 +92,7 @@ const userSlice = createSlice({
         state.currentUser = null;
         state.isLoading = "failed";
         state.error = action.error as Error;
+        state.avatar = null;
       })
 
       .addCase(signOut.pending, (state) => {
@@ -102,5 +114,7 @@ const userSlice = createSlice({
       });
   },
 });
+
+export const { setAvatar } = userSlice.actions;
 
 export default userSlice.reducer;
