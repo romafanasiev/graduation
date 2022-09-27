@@ -11,7 +11,6 @@ const Header = function Header() {
   const locations = location.pathname.split("/");
   const lastPath = locations[locations.length - 1];
   const path = lastPath.charAt(0).toUpperCase() + lastPath.slice(1);
-
   return (
     <Stack
       direction="row"
@@ -20,7 +19,7 @@ const Header = function Header() {
       sx={{ width: "100%" }}
     >
       <Typography variant="h2" sx={{ display: "inline-block" }}>
-        {path}
+        {path.length <= 2 ? "Messages" : path}
       </Typography>
       <Stack
         direction="row"

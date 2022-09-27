@@ -1,5 +1,6 @@
 import React from "react";
 
+import { NavLink } from "react-router-dom";
 import {
   Avatar,
   Box,
@@ -42,10 +43,7 @@ const Card: React.FC<Props> = function Card({ data, selected }) {
   }
 
   return (
-    <TableRow
-      key={data.id}
-      // sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-    >
+    <TableRow key={data.id} sx={cardStyles.row}>
       {selected.map((string, index) => {
         if (index === 0) {
           return (
@@ -55,16 +53,21 @@ const Card: React.FC<Props> = function Card({ data, selected }) {
               sx={cardStyles.cell}
               key={string}
             >
-              <Box sx={cardStyles.user}>
-                <Avatar
-                  alt={data.name}
-                  src={data.avatar}
-                  sx={cardStyles.avatar}
-                />
-                <Typography sx={cardStyles.text}>
-                  {data[string as keyof CategoryItem]}
-                </Typography>
-              </Box>
+              <NavLink
+                to={`/admin/messages/${data.id}`}
+                className="message-link"
+              >
+                <Box sx={cardStyles.user}>
+                  <Avatar
+                    alt={data.name}
+                    src={data.avatar}
+                    sx={cardStyles.avatar}
+                  />
+                  <Typography sx={cardStyles.text}>
+                    {data[string as keyof CategoryItem]}
+                  </Typography>
+                </Box>
+              </NavLink>
             </TableCell>
           );
         }
@@ -76,11 +79,16 @@ const Card: React.FC<Props> = function Card({ data, selected }) {
               sx={cardStyles.cell}
               key={string}
             >
-              <Typography
-                sx={Object.assign(cardStyles.priority, priorityClass)}
+              <NavLink
+                to={`/admin/messages/${data.id}`}
+                className="message-link"
               >
-                {priority}
-              </Typography>
+                <Typography
+                  sx={Object.assign(cardStyles.priority, priorityClass)}
+                >
+                  {priority}
+                </Typography>
+              </NavLink>
             </TableCell>
           );
         }
@@ -91,9 +99,11 @@ const Card: React.FC<Props> = function Card({ data, selected }) {
             sx={cardStyles.cell}
             key={string}
           >
-            <Typography sx={cardStyles.text}>
-              {data[string as keyof CategoryItem]}
-            </Typography>
+            <NavLink to={`/admin/messages/${data.id}`} className="message-link">
+              <Typography sx={cardStyles.text}>
+                {data[string as keyof CategoryItem]}
+              </Typography>
+            </NavLink>
           </TableCell>
         );
       })}
@@ -122,7 +132,14 @@ const Card: React.FC<Props> = function Card({ data, selected }) {
               horizontal: "right",
             }}
           >
-            <MenuItem onClick={handleClose}>More info</MenuItem>
+            <MenuItem onClick={handleClose}>
+              <NavLink
+                to={`/admin/messages/${data.id}`}
+                className="message-link"
+              >
+                More info
+              </NavLink>
+            </MenuItem>
             <MenuItem onClick={handleClose}>Delete message</MenuItem>
           </Menu>
         </Box>

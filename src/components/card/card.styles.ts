@@ -1,6 +1,12 @@
 import globalStyles from "../../utils/styles/style-vars";
 
 const cardStyle = {
+  row: {
+    backgroundColor: globalStyles.vars.whiteColor,
+    "&:hover": {
+      backgroundColor: globalStyles.vars.lightBlue,
+    },
+  },
   cell: {
     height: "92px",
   },

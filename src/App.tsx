@@ -11,6 +11,8 @@ import Navigation from "./components/navigation/navigation.component";
 import PrivateRoutes from "./utils/private-routes/private-routes.utils";
 import ContactsPage from "./routes/contacts-page/contacts-page.component";
 import AddPhotoPage from "./routes/add-photo/add-photo-page";
+import MessageDetailsPage from "./routes/message-details-page/message-details-page.component";
+import SettingsPage from "./routes/settings-page/settings-page.component";
 
 // import MESSAGES_DATA from "./utils/users.data";
 // import { addCollectionAndDocuments } from "./utils/firebase/firebase.utils";
@@ -33,9 +35,14 @@ const App: React.FC = function App() {
             <Route path="contacts" element={<ContactsPage />} />
             <Route path="agents" element={<h1>Agents page</h1>} />
             <Route path="articles" element={<h1>Articles page</h1>} />
-            <Route path="settings" element={<h1>Settings page</h1>} />
+            <Route path="settings" element={<SettingsPage />} />
             <Route path="subscription" element={<h1>Subscription page</h1>} />
+            <Route
+              path="messages/:messageId"
+              element={<MessageDetailsPage />}
+            />
           </Route>
+
           <Route path="reset" element={<ResetPassPage />} />
           <Route path="photo" element={<AddPhotoPage />} />
         </Route>
