@@ -8,7 +8,13 @@ function getValidation(...args) {
       .min(6, "Must be minimum 6 characters length"),
     firstName: yup.string().required("Required first name"),
     lastName: yup.string().required("Required last name"),
+    name: yup.string().required("Required name"),
+    priority: yup.string().required("Required priority"),
+    address: yup.string().required("Required address"),
+    date: yup.string().required("Required date"),
+    registration: yup.string().required("Required registration date"),
     email: yup.string().email("Invalid email").required("Required email"),
+    avatar: yup.string().url().required("Please enter avatar url"),
     newpassword: yup
       .string()
       .required("Password is required")

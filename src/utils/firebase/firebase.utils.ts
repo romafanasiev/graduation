@@ -150,6 +150,8 @@ export const onAuthStateChangedListener = (
   callback: NextOrObserver<UserInfo>,
 ) => onAuthStateChanged(auth, callback);
 
+// update User
+
 export const changeUserPassword = async (newpassword: string | undefined) => {
   const user = auth.currentUser;
   if (user && newpassword !== undefined) {

@@ -86,7 +86,6 @@ const theme = createTheme({
           fontSize: "14px",
           fontWeight: "400",
           letterSpacing: "0.3px",
-          textTransform: "uppercase",
         },
         input: {
           height: "42px",
