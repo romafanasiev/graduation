@@ -1,6 +1,8 @@
 import React from "react";
 
 import { NavLink } from "react-router-dom";
+import { useDispatch } from "react-redux";
+
 import {
   Avatar,
   Box,
@@ -13,9 +15,11 @@ import {
 } from "@mui/material";
 
 import MoreVertIcon from "@mui/icons-material/MoreVert";
+import { deleteMessage } from "../../utils/firebase/firebase.utils";
 import { CategoryItem } from "../../store/messages/messages.types";
 
 import cardStyles from "./card.styles";
+import { getMessagesFetch } from "../../store/messages/messages.reducer";
 
 type Props = {
   data: CategoryItem;
@@ -25,10 +29,16 @@ type Props = {
 const Card: React.FC<Props> = function Card({ data, selected }) {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
+  const dispatch = useDispatch();
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
   const handleClose = () => {
+    setAnchorEl(null);
+  };
+  const handleDelete = async () => {
+    await deleteMessage(data);
+    dispatch(getMessagesFetch());
     setAnchorEl(null);
   };
   const { priority } = data;
@@ -140,7 +150,7 @@ const Card: React.FC<Props> = function Card({ data, selected }) {
                 More info
               </NavLink>
             </MenuItem>
-            <MenuItem onClick={handleClose}>Delete message</MenuItem>
+            <MenuItem onClick={handleDelete}>Delete message</MenuItem>
           </Menu>
         </Box>
       </TableCell>

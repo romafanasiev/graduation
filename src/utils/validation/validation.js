@@ -9,7 +9,7 @@ function getValidation(...args) {
     firstName: yup.string().required("Required first name"),
     lastName: yup.string().required("Required last name"),
     name: yup.string().required("Required name"),
-    priority: yup.string().required("Required priority"),
+    priority: yup.string().min(3).required("Required priority"),
     address: yup.string().required("Required address"),
     date: yup.string().required("Required date"),
     registration: yup.string().required("Required registration date"),

@@ -40,7 +40,7 @@ const SelectField: React.FC<SelectFieldType> = function SelectField({
   }
 
   return (
-    <TextField {...configSelect}>
+    <TextField {...configSelect} placeholder="Select value">
       {options.map((item) => {
         return (
           <MenuItem key={item} value={item}>

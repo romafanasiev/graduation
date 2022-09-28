@@ -18,6 +18,7 @@ import {
 import {
   getFirestore,
   doc,
+  collectionGroup,
   getDoc,
   setDoc,
   QueryDocumentSnapshot,
@@ -25,10 +26,13 @@ import {
   writeBatch,
   query,
   getDocs,
-  getDocsFromCache,
+  updateDoc,
+  arrayUnion,
+  arrayRemove,
+  deleteField,
 } from "firebase/firestore";
 import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
-import { Category } from "../../store/messages/messages.types";
+import { Category, CategoryItem } from "../../store/messages/messages.types";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -92,6 +96,25 @@ export const getCategoriesAndDocuments = async (
   return querySnapshot.docs.map(
     (docSnapshot) => docSnapshot.data() as Category,
   );
+};
+
+// update Database
+
+export const addMessage = async (data: CategoryItem) => {
+  const collectionRef = collection(db, "messages");
+  const docRef = doc(collectionRef, "messages");
+  await updateDoc(docRef, {
+    items: arrayUnion(data),
+  });
+};
+
+export const deleteMessage = async (data: CategoryItem) => {
+  const collectionRef = collection(db, "messages");
+  const docRef = doc(collectionRef, "messages");
+
+  await updateDoc(docRef, {
+    items: arrayRemove(data),
+  });
 };
 
 // creating User
