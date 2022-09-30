@@ -27,13 +27,11 @@
       "prettier"
     ],
     "rules": {
-      "jsx-a11y/label-has-associated-control": [
-        2,
+      "no-param-reassign": [
+        "error",
         {
-          "labelComponents": ["CustomInputLabel"],
-          "labelAttributes": ["label"],
-          "controlComponents": ["CustomInput"],
-          "depth": 3
+          "props": true,
+          "ignorePropertyModificationsFor": ["state"]
         }
       ]
     }
