@@ -1,9 +1,7 @@
 import React from "react";
-import { Button, Menu, MenuItem } from "@mui/material";
+import { Button, Menu, MenuItem, useTheme } from "@mui/material";
 
 import { FilterDataType } from "../../utils/types/types";
-
-import sortStyles from "./sort.styles";
 
 type Props = {
   id: string;
@@ -24,6 +22,7 @@ const SortComponent: React.FC<Props> = function SortComponent({
   handleClose,
   menuItems,
 }) {
+  const theme = useTheme();
   return (
     <>
       <Button
@@ -32,7 +31,11 @@ const SortComponent: React.FC<Props> = function SortComponent({
         id={`${id}-button`}
         onClick={handleClick}
         startIcon={logo}
-        sx={sortStyles}
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          color: theme.palette.text.primary,
+        }}
         disableRipple
       >
         {`${id[0].toUpperCase()}${id.slice(1)}`}

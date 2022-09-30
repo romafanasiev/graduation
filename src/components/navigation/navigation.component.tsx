@@ -15,7 +15,7 @@ const Navigation = function Navigation() {
   }, []);
   return (
     <>
-      <AppBar>
+      <AppBar color="primary">
         <MenuDrawer />
         <Header />
       </AppBar>

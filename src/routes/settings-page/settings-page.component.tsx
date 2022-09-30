@@ -5,6 +5,7 @@ import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import Wrapper from "../../components/wrapper/wrapper.component";
 import { RootState } from "../../store/store";
 import { UserData } from "../../utils/firebase/firebase.utils";
+import ThemeSwitcher from "../../components/theme-switcher/theme-switcher.component";
 
 const SettingsPage: React.FC = function SettingsPage() {
   const userData = useSelector((state: RootState) => state.user.currentUser);
@@ -19,6 +20,7 @@ const SettingsPage: React.FC = function SettingsPage() {
 
   return (
     <Wrapper>
+      <ThemeSwitcher />
       {user ? (
         <Box>
           {userAvatar ? (

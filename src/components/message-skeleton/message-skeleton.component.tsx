@@ -40,7 +40,12 @@ const MessageSkeleton: React.FC<MessagesSkeletonType> =
           }
           return (
             <TableCell key={item} sx={messageSkeletonStyle.cell}>
-              <Skeleton animation="wave" height={30} width="40%" />
+              <Skeleton
+                animation="wave"
+                height={30}
+                width="40%"
+                color="secondary"
+              />
             </TableCell>
           );
         })}

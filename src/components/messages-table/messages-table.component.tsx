@@ -8,11 +8,11 @@ import {
   TableContainer,
   TableHead,
   TableRow,
+  useTheme,
 } from "@mui/material";
 import { CategoryItem } from "../../store/messages/messages.types";
 import Card from "../card/card.component";
 
-import globalStyles from "../../utils/styles/style-vars";
 import PopUp from "../popup/popup.component";
 import SortIcon from "../sort-icon/sort-icon.component";
 import FilterIcon from "../filter-icon/filter-icon.component";
@@ -44,6 +44,7 @@ const MessagesTable: React.FC<MessagesTableType> = function MessagesTable({
   const [sortOrder, setSortOrder] = useState<string>("asc");
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(perPageVariants[0]);
+  const theme = useTheme();
 
   const handleChangePage = (_event: unknown, newPage: number) => {
     setPage(newPage);
@@ -147,7 +148,8 @@ const MessagesTable: React.FC<MessagesTableType> = function MessagesTable({
                   sx={{
                     fontWeight: 700,
                     letterSpacing: "0.2px",
-                    color: globalStyles.vars.greyColor,
+                    color: theme.palette.secondary.light,
+                    borderColor: theme.palette.divider,
                     textAlign: row === "Priority" ? "center" : "start",
                   }}
                 >

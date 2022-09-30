@@ -1,7 +1,5 @@
 import React, { ReactNode } from "react";
-import { Container } from "@mui/material";
-
-import ContainerStyles from "./log-in-container.styles";
+import { Container, useTheme } from "@mui/material";
 
 interface LogInContainerType {
   children: ReactNode;
@@ -10,8 +8,24 @@ interface LogInContainerType {
 const LogInContainer: React.FC<LogInContainerType> = function LogInContainer({
   children,
 }) {
+  const theme = useTheme();
+
   return (
-    <Container sx={ContainerStyles} maxWidth={false}>
+    <Container
+      sx={{
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+
+        margin: 0,
+        padding: "20px",
+
+        minHeight: "100vh",
+
+        backgroundColor: `${theme.palette.secondary.main}`,
+      }}
+      maxWidth={false}
+    >
       {children}
     </Container>
   );

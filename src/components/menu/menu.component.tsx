@@ -2,16 +2,14 @@ import React, { useState } from "react";
 import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
 import Divider from "@mui/material/Divider";
-import { IconButton, Typography } from "@mui/material";
+import { IconButton, Typography, useTheme } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import Logo from "../logo/logo.component";
 import MenuListItem from "../menu-list/menu-list.component";
 
-import globalStyles from "../../utils/styles/style-vars";
-
 export default function MenuDrawer() {
   const [state, setState] = useState(false);
-
+  const theme = useTheme();
   const navigationLinks = [
     "Overview",
     "Tickets",
@@ -41,8 +39,8 @@ export default function MenuDrawer() {
       sx={{
         width: 250,
         height: "100%",
-        backgroundColor: globalStyles.vars.backgroundColor,
-        color: globalStyles.vars.subtitleColor,
+        backgroundColor: theme.palette.secondary.main,
+        color: theme.palette.text.secondary,
       }}
       onClick={toggleDrawer(false)}
       onKeyDown={toggleDrawer(false)}
@@ -71,7 +69,7 @@ export default function MenuDrawer() {
   return (
     <>
       <IconButton onClick={toggleDrawer(true)} aria-label="menu icon">
-        <MenuIcon />
+        <MenuIcon color="icons" />
       </IconButton>
       <Drawer anchor="left" open={state} onClose={toggleDrawer(false)}>
         {list()}

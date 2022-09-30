@@ -26,7 +26,7 @@ const SubmitButton: React.FC<SubmitButtonType> = function SubmitButton({
   };
 
   return (
-    <Button {...configButton} variant="outlined">
+    <Button {...configButton} color="button" variant="contained">
       {text}
     </Button>
   );

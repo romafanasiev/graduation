@@ -1,9 +1,9 @@
 import React from "react";
-import { IconButton, InputAdornment, TextField } from "@mui/material";
+import { IconButton, InputAdornment, TextField, useTheme } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
-import globalStyles from "../../utils/styles/style-vars";
 
 function SearchField(): React.ReactElement {
+  const theme = useTheme();
   return (
     <TextField
       variant="standard"
@@ -12,7 +12,7 @@ function SearchField(): React.ReactElement {
         padding: "0 0 0 12px",
         borderRadius: "8px",
         "&:hover": {
-          backgroundColor: globalStyles.vars.whiteGrayColor,
+          backgroundColor: theme.palette.background.default,
         },
       }}
       InputProps={{

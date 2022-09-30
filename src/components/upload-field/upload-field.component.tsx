@@ -15,11 +15,12 @@ const UploadField: React.FC<Props> = function UploadField({ setFieldValue }) {
 
   return (
     <Button
+      color="button"
       variant="contained"
       component="label"
       fullWidth
       sx={{ margin: "24px 0 0" }}
-      endIcon={<PhotoCamera />}
+      endIcon={<PhotoCamera color="inherit" />}
     >
       {fileName}
       <input

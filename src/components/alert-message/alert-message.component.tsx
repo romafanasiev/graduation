@@ -7,7 +7,7 @@ type TextType = {
 
 const AlertMessage: React.FC<TextType> = function AlertMessage({ text }) {
   return (
-    <Alert severity="error" sx={{ mt: 2 }}>
+    <Alert severity="error" sx={{ mt: 2 }} color="error">
       {text}
     </Alert>
   );

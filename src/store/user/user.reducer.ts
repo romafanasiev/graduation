@@ -16,6 +16,7 @@ interface UserState {
   error: null | Error;
   isAuthenticated: boolean;
   avatar: null | string;
+  whiteThemeColor: boolean;
 }
 
 const USER_INITIAL_STATE = {
@@ -24,6 +25,7 @@ const USER_INITIAL_STATE = {
   error: null,
   isAuthenticated: false,
   avatar: null,
+  whiteThemeColor: true,
 } as UserState;
 
 interface SignInType {
@@ -70,6 +72,9 @@ const userSlice = createSlice({
     setAvatar: (state, action) => {
       state.avatar = action.payload;
     },
+    setTheme: (state) => {
+      state.whiteThemeColor = !state.whiteThemeColor;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -115,6 +120,6 @@ const userSlice = createSlice({
   },
 });
 
-export const { setAvatar } = userSlice.actions;
+export const { setAvatar, setTheme } = userSlice.actions;
 
 export default userSlice.reducer;

@@ -1,15 +1,6 @@
 import globalStyles from "../../utils/styles/style-vars";
 
 const cardStyle = {
-  row: {
-    backgroundColor: globalStyles.vars.whiteColor,
-    "&:hover": {
-      backgroundColor: globalStyles.vars.lightBlue,
-    },
-  },
-  cell: {
-    height: "92px",
-  },
   user: {
     display: "flex",
     alignItems: "center",
@@ -22,10 +13,6 @@ const cardStyle = {
     borderRadius: "50%",
     background:
       "radial-gradient(circle, rgba(238,174,202,1) 0%, rgba(52,54,161,1) 100%)",
-  },
-  text: {
-    fontWeight: "600",
-    letterSpacing: "0.2px",
   },
   priority: {
     display: "flex",

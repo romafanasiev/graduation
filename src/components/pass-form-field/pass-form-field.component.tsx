@@ -86,6 +86,7 @@ const PassFormField: React.FC<PassFormFieldType> = function PassFormField({
               onClick={handleClickShowPassword}
               onMouseDown={handleMouseDownPassword}
               edge="end"
+              color="icons"
             >
               {values.showPassword ? <VisibilityOff /> : <Visibility />}
             </IconButton>

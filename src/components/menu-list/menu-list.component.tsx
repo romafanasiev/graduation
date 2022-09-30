@@ -6,9 +6,9 @@ import {
   ListItemIcon,
   ListItemText,
   SvgIcon,
+  useTheme,
 } from "@mui/material";
 import { Link, useLocation } from "react-router-dom";
-import { menuListStyle, menuListActiveStyle } from "./menu-list.styles";
 
 import { ReactComponent as agents } from "../../assets/icons/agents.svg";
 import { ReactComponent as articles } from "../../assets/icons/articles.svg";
@@ -49,6 +49,28 @@ const MenuListItem: React.FC<Props> = function MenuListItem({ items }) {
   const { pathname } = useLocation();
   const locations = pathname.split("/");
   const lastPath = locations[locations.length - 1];
+  const theme = useTheme();
+
+  const menuListStyle = {
+    borderLeft: `3px solid ${theme.palette.secondary.main}`,
+    "& .MuiSvgIcon-root": {
+      fill: theme.palette.icons,
+    },
+    "&:hover": {
+      borderColor: theme.palette.hover.main,
+      color: theme.palette.hover.main,
+      "& .MuiSvgIcon-root": {
+        fill: theme.palette.hover.main,
+      },
+    },
+  };
+
+  const menuListActiveStyle = {
+    borderLeft: `3px solid ${theme.palette.hover.main}`,
+    "& .MuiSvgIcon-root": {
+      fill: theme.palette.hover.main,
+    },
+  };
 
   return (
     <List>

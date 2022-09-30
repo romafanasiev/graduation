@@ -12,6 +12,7 @@ import {
   TableCell,
   TableRow,
   Typography,
+  useTheme,
 } from "@mui/material";
 
 import MoreVertIcon from "@mui/icons-material/MoreVert";
@@ -41,6 +42,7 @@ const Card: React.FC<Props> = function Card({ data, selected }) {
     dispatch(getMessagesFetch());
     setAnchorEl(null);
   };
+  const theme = useTheme();
   const { priority } = data;
   let priorityClass: { backgroundColor: string };
 
@@ -53,15 +55,16 @@ const Card: React.FC<Props> = function Card({ data, selected }) {
   }
 
   return (
-    <TableRow key={data.id} sx={cardStyles.row}>
+    <TableRow key={data.id} hover>
       {selected.map((string, index) => {
         if (index === 0) {
           return (
             <TableCell
               component="th"
               scope="row"
-              sx={cardStyles.cell}
               key={string}
+              color="primary"
+              sx={{ borderColor: theme.palette.divider }}
             >
               <NavLink
                 to={`/admin/messages/${data.id}`}
@@ -73,9 +76,7 @@ const Card: React.FC<Props> = function Card({ data, selected }) {
                     src={data.avatar}
                     sx={cardStyles.avatar}
                   />
-                  <Typography sx={cardStyles.text}>
-                    {data[string as keyof CategoryItem]}
-                  </Typography>
+                  {data[string as keyof CategoryItem]}
                 </Box>
               </NavLink>
             </TableCell>
@@ -86,8 +87,8 @@ const Card: React.FC<Props> = function Card({ data, selected }) {
             <TableCell
               component="th"
               scope="row"
-              sx={cardStyles.cell}
               key={string}
+              sx={{ borderColor: theme.palette.divider }}
             >
               <NavLink
                 to={`/admin/messages/${data.id}`}
@@ -106,18 +107,20 @@ const Card: React.FC<Props> = function Card({ data, selected }) {
           <TableCell
             component="th"
             scope="row"
-            sx={cardStyles.cell}
             key={string}
+            sx={{ borderColor: theme.palette.divider }}
           >
             <NavLink to={`/admin/messages/${data.id}`} className="message-link">
-              <Typography sx={cardStyles.text}>
-                {data[string as keyof CategoryItem]}
-              </Typography>
+              {data[string as keyof CategoryItem]}
             </NavLink>
           </TableCell>
         );
       })}
-      <TableCell component="th" scope="row">
+      <TableCell
+        component="th"
+        scope="row"
+        sx={{ borderColor: theme.palette.divider }}
+      >
         <Box>
           <IconButton
             aria-label="more"

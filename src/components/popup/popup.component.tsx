@@ -3,9 +3,8 @@ import React, { useEffect, useState } from "react";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import { Form, Formik } from "formik";
-import { Dialog, DialogContent, InputLabel } from "@mui/material";
+import { Dialog, DialogContent, InputLabel, useTheme } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
-import globalStyles from "../../utils/styles/style-vars";
 import TextFormField from "../text-form-field/text-form-field.component";
 import SubmitButton from "../button-form/button-form.component";
 import getValidation from "../../utils/validation/validation";
@@ -21,6 +20,7 @@ export default function PopUp() {
   const [open, setOpen] = React.useState(false);
   const data = useSelector((state: RootState) => state.messages.messages);
   const dispatch = useDispatch();
+  const theme = useTheme();
   const INITIAL_FORM_STATE = {
     id: Number(messages.length) + 1,
     name: "",
@@ -57,11 +57,8 @@ export default function PopUp() {
       <Button
         onClick={handleOpen}
         sx={{
-          backgroundColor: globalStyles.vars.whiteColor,
-          color: globalStyles.vars.buttonColor,
-          "&:hover": {
-            transform: "scale(1.05)",
-          },
+          backgroundColor: theme.palette.background.paper,
+          color: theme.palette.button.main,
         }}
       >
         + Add message
@@ -129,8 +126,9 @@ export default function PopUp() {
                   fullWidth
                   onClick={handleClose}
                   sx={{
-                    backgroundColor: globalStyles.vars.whiteColor,
-                    color: globalStyles.vars.buttonColor,
+                    margin: "24px 0 0",
+                    backgroundColor: theme.palette.background.paper,
+                    color: theme.palette.button.main,
                   }}
                 >
                   Cancel
