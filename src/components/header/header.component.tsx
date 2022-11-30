@@ -1,14 +1,13 @@
-import React from "react";
+import React, { FC } from 'react';
+import { useLocation } from 'react-router-dom';
+import { Typography, Stack } from '@mui/material';
+import { SearchField } from '../search-field';
+import { UserInfo } from '../user-info';
+import { Notification } from '../notification';
 
-import { useLocation } from "react-router-dom";
-import { Typography, Stack } from "@mui/material";
-import Notification from "../notification/notification";
-import UserInfo from "../user-info/user-info.component";
-import SearchField from "../search-field/search-field";
-
-const Header = function Header() {
+export const Header: FC = () => {
   const location = useLocation();
-  const locations = location.pathname.split("/");
+  const locations = location.pathname.split('/');
   const lastPath = locations[locations.length - 1];
   const path = lastPath.charAt(0).toUpperCase() + lastPath.slice(1);
   return (
@@ -16,10 +15,10 @@ const Header = function Header() {
       direction="row"
       justifyContent="space-between"
       alignItems="center"
-      sx={{ width: "100%" }}
+      sx={{ width: '100%' }}
     >
-      <Typography variant="h2" sx={{ display: "inline-block" }}>
-        {path.length <= 2 ? "Messages" : path}
+      <Typography variant="h2" sx={{ display: 'inline-block' }}>
+        {path.length <= 2 ? 'Messages' : path}
       </Typography>
       <Stack
         direction="row"
@@ -34,5 +33,3 @@ const Header = function Header() {
     </Stack>
   );
 };
-
-export default Header;

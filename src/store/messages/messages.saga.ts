@@ -1,15 +1,13 @@
-import { takeEvery, call, put } from "redux-saga/effects";
-
-import { getCategoriesAndDocuments } from "../../utils/firebase/firebase.utils";
-
-import { getMessagesSuccess, getMessagesFailed } from "./messages.reducer";
-import { Category } from "./messages.types";
+import { takeEvery, call, put } from 'redux-saga/effects';
+import { getCategoriesAndDocuments } from '../../firebase';
+import { getMessagesSuccess, getMessagesFailed } from './messages.reducer';
+import { Category } from './messages.types';
 
 export function* fetchCategoriesAsync() {
   try {
     const categoriesArray: Promise<Category[]> = yield call(
       getCategoriesAndDocuments,
-      "messages",
+      'messages',
     );
     yield put(getMessagesSuccess(categoriesArray));
   } catch (error) {
@@ -18,7 +16,7 @@ export function* fetchCategoriesAsync() {
 }
 
 function* onFetchCategories() {
-  yield takeEvery("messages/getMessagesFetch", fetchCategoriesAsync);
+  yield takeEvery('messages/getMessagesFetch', fetchCategoriesAsync);
 }
 
 export default onFetchCategories;

@@ -1,21 +1,20 @@
-/* eslint-disable react/jsx-props-no-spreading */
-import React, { useEffect, useState } from "react";
-import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
-import { Form, Formik } from "formik";
-import { Dialog, DialogContent, InputLabel, useTheme } from "@mui/material";
-import { useDispatch, useSelector } from "react-redux";
-import TextFormField from "../text-form-field/text-form-field.component";
-import SubmitButton from "../button-form/button-form.component";
-import getValidation from "../../utils/validation/validation";
-import SelectField from "../select-field/select-field.component";
-import DateField from "../date-field/date-field.component";
-import { addMessage } from "../../utils/firebase/firebase.utils";
-import { Category, CategoryItem } from "../../store/messages/messages.types";
-import { RootState } from "../../store/store";
-import { getMessagesFetch } from "../../store/messages/messages.reducer";
+import React, { useEffect, useState, FC } from 'react';
+import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
+import { Form, Formik } from 'formik';
+import { Dialog, DialogContent, InputLabel, useTheme } from '@mui/material';
+import { useDispatch, useSelector } from 'react-redux';
+import { TextFormField } from '../text-form-field';
+import { SubmitButton } from '../submit-button';
+import getValidation from '../../validation/validation';
+import { SelectField } from '../select-field';
+import { DateField } from '../date-field';
+import { Category, CategoryItem } from '../../store/messages/messages.types';
+import { RootState } from '../../store/store';
+import { getMessagesFetch } from '../../store/messages/messages.reducer';
+import { addMessage } from '../../firebase';
 
-export default function PopUp() {
+export const PopUp: FC = () => {
   const [messages, setMessages] = useState<CategoryItem[]>([]);
   const [open, setOpen] = React.useState(false);
   const data = useSelector((state: RootState) => state.messages.messages);
@@ -23,23 +22,23 @@ export default function PopUp() {
   const theme = useTheme();
   const INITIAL_FORM_STATE = {
     id: Number(messages.length) + 1,
-    name: "",
-    email: "",
+    name: '',
+    email: '',
     avatar: `https://robohash.org/${Number(messages.length) + 1}`,
-    priority: "",
-    message: "",
-    address: "",
-    date: "",
+    priority: '',
+    message: '',
+    address: '',
+    date: '',
     registration: `${new Date().toLocaleDateString()}`,
   };
   const FORM_VALIDATION = getValidation(
-    "name",
-    "email",
-    "avatar",
-    "message",
-    "priority",
-    "address",
-    "date",
+    'name',
+    'email',
+    'avatar',
+    'message',
+    'priority',
+    'address',
+    'date',
   );
 
   const handleOpen = () => setOpen(true);
@@ -80,11 +79,11 @@ export default function PopUp() {
           >
             {({ setFieldValue }) => (
               <Form className="sign-form">
-                <InputLabel htmlFor="name" sx={{ margin: "0 0 6px" }}>
+                <InputLabel htmlFor="name" sx={{ margin: '0 0 6px' }}>
                   Name
                 </InputLabel>
                 <TextFormField name="name" placeholder="User name" id="name" />
-                <InputLabel htmlFor="email" sx={{ margin: "0 0 6px" }}>
+                <InputLabel htmlFor="email" sx={{ margin: '0 0 6px' }}>
                   Email
                 </InputLabel>
                 <TextFormField
@@ -92,14 +91,14 @@ export default function PopUp() {
                   placeholder="User email"
                   id="email"
                 />
-                <InputLabel htmlFor="priority" sx={{ margin: "0 0 6px" }}>
+                <InputLabel htmlFor="priority" sx={{ margin: '0 0 6px' }}>
                   Priority
                 </InputLabel>
                 <SelectField
                   name="priority"
-                  options={["high", "low", "normal"]}
+                  options={['high', 'low', 'normal']}
                 />
-                <InputLabel htmlFor="message" sx={{ margin: "0 0 6px" }}>
+                <InputLabel htmlFor="message" sx={{ margin: '0 0 6px' }}>
                   Message
                 </InputLabel>
                 <TextFormField
@@ -107,7 +106,7 @@ export default function PopUp() {
                   placeholder="Message"
                   id="message"
                 />
-                <InputLabel htmlFor="address" sx={{ margin: "0 0 6px" }}>
+                <InputLabel htmlFor="address" sx={{ margin: '0 0 6px' }}>
                   Address
                 </InputLabel>
                 <TextFormField
@@ -119,14 +118,14 @@ export default function PopUp() {
                 <SubmitButton
                   text="Log in"
                   sx={{
-                    margin: "24px 0 0",
+                    margin: '24px 0 0',
                   }}
                 />
                 <Button
                   fullWidth
                   onClick={handleClose}
                   sx={{
-                    margin: "24px 0 0",
+                    margin: '24px 0 0',
                     backgroundColor: theme.palette.background.paper,
                     color: theme.palette.button.main,
                   }}
@@ -140,4 +139,4 @@ export default function PopUp() {
       </Dialog>
     </div>
   );
-}
+};

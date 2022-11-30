@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
 
 export const MESSAGES_INITIAL_STATE = {
   messages: [],
@@ -7,7 +7,7 @@ export const MESSAGES_INITIAL_STATE = {
 };
 
 const messagesSlice = createSlice({
-  name: "messages",
+  name: 'messages',
   initialState: MESSAGES_INITIAL_STATE,
   reducers: {
     getMessagesFetch: (state) => {

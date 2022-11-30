@@ -1,7 +1,7 @@
-import React from "react";
+import React, { FC } from 'react';
 
-import { NavLink } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { NavLink } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 
 import {
   Avatar,
@@ -13,21 +13,22 @@ import {
   TableRow,
   Typography,
   useTheme,
-} from "@mui/material";
+} from '@mui/material';
 
-import MoreVertIcon from "@mui/icons-material/MoreVert";
-import { deleteMessage } from "../../utils/firebase/firebase.utils";
-import { CategoryItem } from "../../store/messages/messages.types";
+import MoreVertIcon from '@mui/icons-material/MoreVert';
 
-import cardStyles from "./card.styles";
-import { getMessagesFetch } from "../../store/messages/messages.reducer";
+import { CategoryItem } from '../../store/messages/messages.types';
+import { deleteMessage } from '../../firebase';
+
+import { getMessagesFetch } from '../../store/messages/messages.reducer';
+import { cardStyle } from './Card.styles';
 
 type Props = {
   data: CategoryItem;
   selected: string[];
 };
 
-const Card: React.FC<Props> = function Card({ data, selected }) {
+export const Card: FC<Props> = ({ data, selected }) => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const dispatch = useDispatch();
@@ -46,12 +47,12 @@ const Card: React.FC<Props> = function Card({ data, selected }) {
   const { priority } = data;
   let priorityClass: { backgroundColor: string };
 
-  if (priority === "low") {
-    priorityClass = cardStyles.prioritylow;
-  } else if (priority === "high") {
-    priorityClass = cardStyles.priorityhigh;
+  if (priority === 'low') {
+    priorityClass = cardStyle.prioritylow;
+  } else if (priority === 'high') {
+    priorityClass = cardStyle.priorityhigh;
   } else {
-    priorityClass = cardStyles.prioritynormal;
+    priorityClass = cardStyle.prioritynormal;
   }
 
   return (
@@ -70,11 +71,11 @@ const Card: React.FC<Props> = function Card({ data, selected }) {
                 to={`/admin/messages/${data.id}`}
                 className="message-link"
               >
-                <Box sx={cardStyles.user}>
+                <Box sx={cardStyle.user}>
                   <Avatar
                     alt={data.name}
                     src={data.avatar}
-                    sx={cardStyles.avatar}
+                    sx={cardStyle.avatar}
                   />
                   {data[string as keyof CategoryItem]}
                 </Box>
@@ -82,7 +83,7 @@ const Card: React.FC<Props> = function Card({ data, selected }) {
             </TableCell>
           );
         }
-        if (string === "priority") {
+        if (string === 'priority') {
           return (
             <TableCell
               component="th"
@@ -95,7 +96,7 @@ const Card: React.FC<Props> = function Card({ data, selected }) {
                 className="message-link"
               >
                 <Typography
-                  sx={Object.assign(cardStyles.priority, priorityClass)}
+                  sx={Object.assign(cardStyle.priority, priorityClass)}
                 >
                   {priority}
                 </Typography>
@@ -137,12 +138,12 @@ const Card: React.FC<Props> = function Card({ data, selected }) {
             onClose={handleClose}
             disableScrollLock
             anchorOrigin={{
-              vertical: "center",
-              horizontal: "left",
+              vertical: 'center',
+              horizontal: 'left',
             }}
             transformOrigin={{
-              vertical: "center",
-              horizontal: "right",
+              vertical: 'center',
+              horizontal: 'right',
             }}
           >
             <MenuItem onClick={handleClose}>
@@ -160,5 +161,3 @@ const Card: React.FC<Props> = function Card({ data, selected }) {
     </TableRow>
   );
 };
-
-export default Card;
