@@ -1,6 +1,6 @@
-import React from "react";
+import React, { FC } from 'react';
 
-const Statistic: React.FC = function Statistic() {
+export const Statistic: FC = () => {
   return (
     <iframe
       title="statistic"

@@ -1,23 +1,21 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { QueryDocumentSnapshot } from "firebase/firestore";
-
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { QueryDocumentSnapshot } from 'firebase/firestore';
 import {
   signInAuthUserWithEmailAndPassword,
   UserData,
   createUserDocumentFromAuth,
   signOutUser,
-} from "../../utils/firebase/firebase.utils";
+} from '../../firebase';
+import { UserActionTypes } from './user.types';
 
-import USER_ACTION_TYPES from "./user.types";
-
-interface UserState {
+type UserState = {
   currentUser: UserData | null;
   isLoading: boolean | string;
   error: null | Error;
   isAuthenticated: boolean;
   avatar: null | string;
   whiteThemeColor: boolean;
-}
+};
 
 const USER_INITIAL_STATE = {
   currentUser: null,
@@ -34,7 +32,7 @@ interface SignInType {
 }
 
 export const signIn = createAsyncThunk(
-  USER_ACTION_TYPES.SIGN_IN,
+  UserActionTypes.SIGN_IN,
   async (data: SignInType) => {
     const { email, password } = data;
     const userCredential = await signInAuthUserWithEmailAndPassword(
@@ -57,16 +55,13 @@ export const signIn = createAsyncThunk(
   },
 );
 
-export const signOut = createAsyncThunk(
-  USER_ACTION_TYPES.SIGN_OUT,
-  async () => {
-    await signOutUser();
-    return null;
-  },
-);
+export const signOut = createAsyncThunk(UserActionTypes.SIGN_OUT, async () => {
+  await signOutUser();
+  return null;
+});
 
 const userSlice = createSlice({
-  name: "user",
+  name: 'user',
   initialState: USER_INITIAL_STATE,
   reducers: {
     setAvatar: (state, action) => {
@@ -95,7 +90,7 @@ const userSlice = createSlice({
 
       .addCase(signIn.rejected, (state, action) => {
         state.currentUser = null;
-        state.isLoading = "failed";
+        state.isLoading = 'failed';
         state.error = action.error as Error;
         state.avatar = null;
       })
@@ -114,7 +109,7 @@ const userSlice = createSlice({
 
       .addCase(signOut.rejected, (state, action) => {
         state.currentUser = null;
-        state.isLoading = "failed";
+        state.isLoading = 'failed';
         state.error = action.error as Error;
       });
   },

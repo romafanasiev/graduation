@@ -1,14 +1,12 @@
-/* eslint-disable react/jsx-props-no-spreading */
-import { SvgIcon, SxProps } from "@mui/material";
-import React from "react";
-
-import { ReactComponent as logo } from "../../assets/logo.svg";
+import React, { FC } from 'react';
+import { SvgIcon, SxProps } from '@mui/material';
+import { ReactComponent as logo } from '../../assets/logo.svg';
 
 type LogoType = {
   sx?: SxProps;
 };
 
-const Logo: React.FC<LogoType> = function Logo({ ...otherProps }) {
+export const Logo: FC<LogoType> = ({ ...otherProps }) => {
   const configLogo = {
     ...otherProps,
   };
@@ -26,5 +24,3 @@ const Logo: React.FC<LogoType> = function Logo({ ...otherProps }) {
 Logo.defaultProps = {
   sx: null,
 };
-
-export default Logo;

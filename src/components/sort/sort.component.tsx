@@ -1,7 +1,6 @@
-import React from "react";
-import { Button, Menu, MenuItem, useTheme } from "@mui/material";
-
-import { FilterDataType } from "../../utils/types/types";
+import React, { FC } from 'react';
+import { Button, Menu, MenuItem, useTheme } from '@mui/material';
+import { FilterDataType } from '../../types/types';
 
 type Props = {
   id: string;
@@ -13,7 +12,7 @@ type Props = {
   menuItems: FilterDataType[];
 };
 
-const SortComponent: React.FC<Props> = function SortComponent({
+export const SortComponent: FC<Props> = ({
   id,
   handleClick,
   logo,
@@ -21,7 +20,7 @@ const SortComponent: React.FC<Props> = function SortComponent({
   choosenEl,
   handleClose,
   menuItems,
-}) {
+}) => {
   const theme = useTheme();
   return (
     <>
@@ -32,8 +31,8 @@ const SortComponent: React.FC<Props> = function SortComponent({
         onClick={handleClick}
         startIcon={logo}
         sx={{
-          display: "flex",
-          alignItems: "center",
+          display: 'flex',
+          alignItems: 'center',
           color: theme.palette.text.primary,
         }}
         disableRipple
@@ -47,16 +46,16 @@ const SortComponent: React.FC<Props> = function SortComponent({
         onClose={handleClose}
         disableScrollLock
         anchorOrigin={{
-          vertical: "center",
-          horizontal: "left",
+          vertical: 'center',
+          horizontal: 'left',
         }}
         transformOrigin={{
-          vertical: "center",
-          horizontal: "right",
+          vertical: 'center',
+          horizontal: 'right',
         }}
       >
         {menuItems.map((item) => {
-          if (id === "sort") {
+          if (id === 'sort') {
             return (
               <MenuItem
                 onClick={handleClose}
@@ -81,5 +80,3 @@ const SortComponent: React.FC<Props> = function SortComponent({
     </>
   );
 };
-
-export default SortComponent;

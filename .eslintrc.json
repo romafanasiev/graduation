@@ -1,38 +1,56 @@
 {
-    "env": {
-        "browser": true,
-        "es2021": true
+  "env": {
+    "browser": true,
+    "es2021": true
+  },
+  "extends": [
+    "react-app",
+    "airbnb",
+    "airbnb-typescript",
+    "plugin:import/typescript",
+    "plugin:prettier/recommended"
+  ],
+  "parser": "@typescript-eslint/parser",
+  "overrides": [],
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
     },
-    "extends": [
-      "react-app",
-      "airbnb",
-      "airbnb-typescript",
-      "plugin:import/typescript",
-      "plugin:prettier/recommended"
+    "ecmaVersion": "latest",
+    "sourceType": "module",
+    "project": "./tsconfig.json"
+  },
+  "plugins": ["react", "@typescript-eslint", "prettier"],
+  "rules": {
+    "import/no-unresolved": "error",
+    "import/extensions": [2, "never"],
+    "import/order": [
+      2,
+      { "groups": [["builtin", "external"], "internal", "parent", "sibling"] }
     ],
-    "parser": "@typescript-eslint/parser",
-    "overrides": [
+    "import/prefer-default-export": [0],
+    "react/jsx-props-no-spreading": ["warn"],
+    "no-param-reassign": [
+      "error",
+      {
+        "props": true,
+        "ignorePropertyModificationsFor": ["state"]
+      }
     ],
-    "parserOptions": {
-      "ecmaFeatures": {
-            "jsx": true
-        },
-      "ecmaVersion": "latest",
-      "sourceType": "module",
-      "project": "./tsconfig.json"
-    },
-    "plugins": [
-      "react",
-      "@typescript-eslint",
-      "prettier"
+    "quotes": ["error", "single"],
+    "jsx-quotes": ["error", "prefer-double"],
+    "react/function-component-definition": [
+      2,
+      { "namedComponents": "arrow-function" }
     ],
-    "rules": {
-      "no-param-reassign": [
-        "error",
-        {
-          "props": true,
-          "ignorePropertyModificationsFor": ["state"]
-        }
-      ]
-    }
+    "import/no-cycle": 1,
+    "@typescript-eslint/no-misused-promises": [
+      "error",
+      {
+        "checksVoidReturn": false
+      }
+    ],
+    "@typescript-eslint/consistent-type-definitions": ["warn", "interface"],
+    "@typescript-eslint/restrict-template-expressions": "warn"
+  }
 }

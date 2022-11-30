@@ -1,16 +1,10 @@
-import { configureStore } from "@reduxjs/toolkit";
-import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
-
-import createSagaMiddleware from "redux-saga";
-import { persistStore, persistReducer } from "redux-persist";
-import storage from "redux-persist/lib/storage";
-// import userReducer from "./user/user.reducer";
-// import messagesReducer from "./messages/messages.reducer";
-
-import rootSaga from "./root-saga";
-import rootReducer from "./root-reducer";
-
-// import onFetchCategories from "./messages/messages.saga";
+import { configureStore } from '@reduxjs/toolkit';
+import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
+import createSagaMiddleware from 'redux-saga';
+import { persistStore, persistReducer } from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
+import rootSaga from './root-saga';
+import rootReducer from './root-reducer';
 
 export type RootState = ReturnType<typeof store.getState>;
 
@@ -23,7 +17,7 @@ export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
 const sagaMiddleware = createSagaMiddleware();
 
 const persistConfig = {
-  key: "root",
+  key: 'root',
   storage,
 };
 
@@ -36,17 +30,6 @@ const store = configureStore({
       serializableCheck: false,
     }).concat(sagaMiddleware),
 });
-
-// const store = configureStore({
-//   reducer: {
-//     user: userReducer,
-//     messages: messagesReducer,
-//   },
-//   middleware: (getDefaultMiddleware) =>
-//     getDefaultMiddleware({
-//       serializableCheck: false,
-//     }).concat(sagaMiddleware),
-// });
 
 sagaMiddleware.run(rootSaga);
 export default store;
